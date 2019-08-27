@@ -1,0 +1,14 @@
+{
+  "name": "mapgt",
+  "version": "1.0.0",
+  "description": "A library that lets you easily manipulate SVG floor maps and make them interactive",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Elton Pinto",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^6.2.2"
+  }
+}
