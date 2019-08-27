@@ -1,4 +1,6 @@
-class MapGT {
+import { Area } from './Area';
+
+export default class MapGT {
     /*
         Attributes:
         areas
@@ -21,6 +23,7 @@ class MapGT {
 Suggested solution for dev: python -m http.server`);
         }
         this._appendedToDOM = false;
+        this.areas = this._populateAreas();
     }
 
     // appends the mapObjectTag to the DOM if not already done

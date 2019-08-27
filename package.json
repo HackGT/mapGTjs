@@ -4,11 +4,14 @@
   "description": "A library that lets you easily manipulate SVG floor maps and make them interactive",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "author": "Elton Pinto",
   "license": "ISC",
   "devDependencies": {
-    "eslint": "^6.2.2"
+    "eslint": "^6.2.2",
+    "webpack-cli": "^3.3.7",
+    "webpack": "^4.39.3"
   }
 }
