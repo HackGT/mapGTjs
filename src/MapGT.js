@@ -8,7 +8,6 @@ export default class MapGT {
         outerBorder
         innerBorder
     */
-
     constructor(filePath, parentContainerID="map") {
         this._filePath = filePath;
         this._parentContainerID = parentContainerID;

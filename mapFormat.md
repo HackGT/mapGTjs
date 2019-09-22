@@ -1,3 +1,36 @@
+**UPDATES** *new map format*
+
+```xml
+<svg>
+    <g class="map">
+        <g class="view">
+            <g class="area">
+            </g>
+        </g>
+        <g class="view">
+            <g class="area">
+            </g>
+        </g>
+    </g>
+</svg>
+```
+
+
+
+| Class  | Description                                                  |
+| ------ | ------------------------------------------------------------ |
+| `map`  | The group in the SVG that wraps the map.  Maps are made up of multiple views |
+| `view` | Viewable regions within a map                                |
+| `area` | An area within a view                                        |
+
+
+
+------
+
+**Old format**
+
+*some components of this format can be re-used if the editor will be used for making maps*
+
 To use this package, you need to have an SVG that satisfies the following format:
 
 ```xml
