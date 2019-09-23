@@ -1,4 +1,5 @@
 import { Area } from './Area';
+import { View } from './View';
 
 export default class MapGT {
     /*
@@ -50,5 +51,22 @@ Suggested solution for dev: python -m http.server`);
         for (let group of areasGroup) {
             areas.push(new Area(group));
         }
+    }
+
+    // grabs all of the views in the map
+    getViews() {
+        const dom = this._mapDOM;
+        const views = dom.querySelectorAll('.view');
+        return views; // want the view object
+    }
+
+    // gets specific view
+    getViewById(id) {
+        return this._mapDOM.getElementById(id);
+    }
+
+    // sets a specific view as visible
+    setActiveView() {
+
     }
 }

@@ -8,4 +8,21 @@ export class Area {
         console.log(areaGroup);
         this.areaGroup = areaGroup;
     }
+
+    onMouseHover() {
+
+    }
+
+    // select area as active
+    onClick() {
+
+    }
+
+    highlight() {
+
+    }
+
+    unhighlight() {
+
+    }
 }
