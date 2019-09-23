@@ -18,7 +18,6 @@ export default class MapGT {
             console.warn(`contentDocument of the SVG is null and SVG DOM manipulation will not be possible. Try setting up a simple server to by pass the CORS issue.
 Suggested solution for dev: python -m http.server`);
         }
-        this.areas = this._populateAreas();
     }
 
     // appends the mapObjectTag to the DOM if not already done
@@ -37,14 +36,5 @@ Suggested solution for dev: python -m http.server`);
         mapObjectTag.setAttribute('data', filePath);
         mapObjectTag.setAttribute('type', 'image/svg+xml');
         return mapObjectTag;
-    }
-
-    // finds areas in the map and returns an array of Area objects
-    _populateAreas() {
-        const areasGroup = [...this._mapDOM.querySelectorAll(".areas")];
-        const areas = [];
-        for (let group of areasGroup) {
-            areas.push(new Area(group));
-        }
     }
 }
