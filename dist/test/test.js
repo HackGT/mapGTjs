@@ -1,3 +1,3 @@
 window.onload = () => {
-    const map = new MapGT("./maps/map1.svg");
+    const map = new MapGT("./maps/map2.svg");
 }
