@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack"
+    "build": "webpack --watch",
+    "start": "npm run build & npm run start-python-server",
+    "start-python-server": "python3 -m http.server 8000"
   },
-  "author": "Elton Pinto",
+  "author": "HackGT",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^6.2.2",

@@ -2,13 +2,6 @@ import { Area } from './Area';
 import { View } from './View';
 
 export default class MapGT {
-    /*
-        Attributes:
-        areas
-        icons
-        outerBorder
-        innerBorder
-    */
     constructor(filePath, parentContainerID="map") {
         this._filePath = filePath;
         this._parentContainerID = parentContainerID;
@@ -16,14 +9,16 @@ export default class MapGT {
         if (!this._parentContainer) {
             console.error(`parent container with id ${this._parentContainerID} could not be found.`)
         }
-        this._mapObjectTag = this._createMap(this.filePath);
+        this._mapObjectTag = this._createMap(this._filePath);
+
+        this._appendedToDOM = false;
+        this.showMap();
+
         this._mapDOM = this._mapObjectTag.contentDocument;
         if (!this._mapDOM) {
             console.warn(`contentDocument of the SVG is null and SVG DOM manipulation will not be possible. Try setting up a simple server to by pass the CORS issue.
 Suggested solution for dev: python -m http.server`);
         }
-        this._appendedToDOM = false;
-        this.areas = this._populateAreas();
     }
 
     // appends the mapObjectTag to the DOM if not already done
