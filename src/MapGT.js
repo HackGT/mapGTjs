@@ -10,14 +10,18 @@ export default class MapGT {
             console.error(`parent container with id ${this._parentContainerID} could not be found.`)
         }
         this._mapObjectTag = this._createMap(this._filePath);
-
         this._appendedToDOM = false;
         this.showMap();
-
-        this._mapDOM = this._mapObjectTag.contentDocument;
-        if (!this._mapDOM) {
-            console.warn(`contentDocument of the SVG is null and SVG DOM manipulation will not be possible. Try setting up a simple server to by pass the CORS issue.
-Suggested solution for dev: python -m http.server`);
+        this._mapObjectTag.onload = (e) => {
+            this._mapDOM = e.target.contentDocument;
+            if (!this._mapDOM) {
+                console.warn(`contentDocument of the SVG is null and SVG DOM manipulation will not be possible. Try setting up a simple server to by pass the CORS issue.
+    Suggested solution for dev: python -m http.server`);
+            }
+            window.area = this._mapDOM.getElementById("1");
+            const area = new Area(window.area, 1);
+            console.log(area);
+            area.highlight();
         }
     }
 
@@ -62,6 +66,6 @@ Suggested solution for dev: python -m http.server`);
 
     // sets a specific view as visible
     setActiveView() {
-
+        
     }
 }

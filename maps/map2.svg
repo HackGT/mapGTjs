@@ -10,7 +10,7 @@
                 <g class="icons serialized">
                 </g>
             </g>
-            <g class="area">
+            <g class="area" id="1">
                 <path d="M 0 250 L 650 250 L 650 500 L 0 500 Z" fill="none">
                 </path>
                 <g class="icons serialized">

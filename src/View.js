@@ -1,8 +1,6 @@
 export class View {
 
-    constructor(areaGroup) {
-        console.log(areaGroup);
-        this.areaGroup = areaGroup;
+    constructor(areaGroup) { 
     }
 
     // gets a specific area from a view
