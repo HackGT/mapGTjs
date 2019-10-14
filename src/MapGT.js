@@ -1,6 +1,12 @@
 import { Area } from './Area';
 import { View } from './View';
 
+/*
+    TODOS:
+        React integration
+        pop up card dropping functionality
+ */
+
 export default class MapGT {
     constructor(filePath, parentContainerID="map") {
         this._filePath = filePath;
@@ -17,11 +23,15 @@ export default class MapGT {
             if (!this._mapDOM) {
                 console.warn(`contentDocument of the SVG is null and SVG DOM manipulation will not be possible. Try setting up a simple server to by pass the CORS issue.
     Suggested solution for dev: python -m http.server`);
+                return;
             }
-            window.area = this._mapDOM.getElementById("1");
-            const area = new Area(window.area, 1);
-            console.log(area);
-            area.highlight();
+            this.views = [];
+            this.areas = [];
+            this._populateViews();
+            this.currentView = Array.from(this._mapDOM.querySelectorAll(".view"))
+                .filter(el => el.attributes.visibility.nodeValue == "visible")[0];
+            this.setActiveView("view0");
+            this.addViewSwitcher();
         }
     }
 
@@ -43,29 +53,52 @@ export default class MapGT {
         return mapObjectTag;
     }
 
-    // finds areas in the map and returns an array of Area objects
-    _populateAreas(mapDOM) {
-        const areasGroup = mapDOM.querySelector(".areas");
-        const areas = [];
-        for (let group of areasGroup) {
-            areas.push(new Area(group));
-        }
+    _populateViews() {
+        Array.from(this._mapDOM.querySelectorAll(".view")).map(view => {
+            this.views.push(new View(view));
+        });
     }
 
-    // grabs all of the views in the map
-    getViews() {
-        const dom = this._mapDOM;
-        const views = dom.querySelectorAll('.view');
-        return views; // want the view object
+    setActiveView(id) {
+        this.currentView.setAttributeNS(null, "visibility", "hidden");
+        this.currentView = this._mapDOM.getElementById(id);
+        this.currentView.setAttributeNS(null, "visibility", "visible"); 
     }
 
-    // gets specific view
-    getViewById(id) {
-        return this._mapDOM.getElementById(id);
-    }
-
-    // sets a specific view as visible
-    setActiveView() {
+    popupAt(x, y, data) {
         
+    }
+
+    addViewSwitcher() {
+        const viewSwitcher = document.createElement("div");
+        viewSwitcher.classList.add("view-switcher");
+        for (let i = 0; i < this.views.length; i++) {
+            const viewSwitcherOption = document.createElement("div"),
+                radioBtn = document.createElement("input"),
+                label = document.createElement("label");
+
+            if (i == 0) {
+                radioBtn.checked = true;
+            }
+            radioBtn.setAttribute("id", this.views[i].id);
+            radioBtn.setAttribute("type", "radio");
+            radioBtn.setAttribute("name", "view");
+
+            radioBtn.addEventListener("change", (e) => {
+                if (e.target.checked) {
+                    this.setActiveView(this.views[i].id);
+                }
+            })
+
+            label.setAttribute("for", this.views[i].id);
+            label.innerHTML = `${i + 1}`;
+
+            viewSwitcherOption.classList.add("view-switcher-option");
+            viewSwitcherOption.appendChild(radioBtn);
+            viewSwitcherOption.appendChild(label);
+
+            viewSwitcher.appendChild(viewSwitcherOption);
+        }
+        this._parentContainer.appendChild(viewSwitcher);
     }
 }

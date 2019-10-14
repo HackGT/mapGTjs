@@ -1,0 +1,21 @@
+.view-switcher {
+    display: flex;
+}
+
+.view-switcher-option input {
+    display: none;
+}
+
+.view-switcher-option input:checked + label {
+    background: coral;
+}
+
+.view-switcher-option label {
+    padding: 10px;
+    background: pink;
+    cursor: pointer;
+}
+
+.view-switcher-option label:hover {
+    background: lightcoral;
+}
