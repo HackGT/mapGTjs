@@ -59,6 +59,16 @@ export default class MapGT {
         }
     }
 
+    setActiveView(id) {
+        this.currentView.setAttributeNS(null, "visibility", "hidden");
+        this.currentView = this._mapDOM.getElementById(id);
+        this.currentView.setAttributeNS(null, "visibility", "visible"); 
+    }
+
+    popupAt(x, y, data) {
+        
+    }
+
     addViewSwitcher() {
         const viewSwitcher = document.createElement("div");
         viewSwitcher.classList.add("view-switcher");
@@ -90,11 +100,5 @@ export default class MapGT {
             viewSwitcher.appendChild(viewSwitcherOption);
         }
         this._parentContainer.appendChild(viewSwitcher);
-    }
-
-    setActiveView(id) {
-        this.currentView.setAttributeNS(null, "visibility", "hidden");
-        this.currentView = this._mapDOM.getElementById(id);
-        this.currentView.setAttributeNS(null, "visibility", "visible"); 
     }
 }
