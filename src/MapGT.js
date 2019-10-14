@@ -30,6 +30,7 @@ export default class MapGT {
             this._populateViews();
             this.currentView = Array.from(this._mapDOM.querySelectorAll(".view"))
                 .filter(el => el.attributes.visibility.nodeValue == "visible")[0];
+            this.setActiveView("view0");
             this.addViewSwitcher();
         }
     }
@@ -53,10 +54,9 @@ export default class MapGT {
     }
 
     _populateViews() {
-        const views = this._mapDOM.querySelectorAll(".view");
-        for (let view of views) {
+        Array.from(this._mapDOM.querySelectorAll(".view")).map(view => {
             this.views.push(new View(view));
-        }
+        });
     }
 
     setActiveView(id) {
