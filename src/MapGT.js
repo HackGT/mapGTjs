@@ -3,7 +3,6 @@ import { View } from './View';
 
 /*
     TODOS:
-        view switching radio checkbox
         React integration
         pop up card dropping functionality
  */
@@ -31,7 +30,7 @@ export default class MapGT {
             this._populateViews();
             this.currentView = Array.from(this._mapDOM.querySelectorAll(".view"))
                 .filter(el => el.attributes.visibility.nodeValue == "visible")[0];
-            this._addViewSwitcher();
+            this.addViewSwitcher();
         }
     }
 
@@ -60,7 +59,7 @@ export default class MapGT {
         }
     }
 
-    _addViewSwitcher() {
+    addViewSwitcher() {
         const viewSwitcher = document.createElement("div");
         viewSwitcher.classList.add("view-switcher");
         for (let i = 0; i < this.views.length; i++) {
