@@ -4,7 +4,9 @@ import { View } from './View';
 /*
     TODOS:
         React integration
-        pop up card dropping functionality
+        updating the url based on what is chosen / clicked
+        updating the map based on the url passed in
+        dropping a pin
  */
 
 export default class MapGT {
@@ -30,11 +32,8 @@ export default class MapGT {
             this._populateViews();
             this.currentView = Array.from(this._mapDOM.querySelectorAll(".view"))
                 .filter(el => el.attributes.visibility.nodeValue == "visible")[0];
-            this.setActiveView("view0");
             this.addViewSwitcher();
-            this.findCenter("yeet");
-
-            
+            this.setActiveView("view0");
         }
     }
 
@@ -46,6 +45,10 @@ export default class MapGT {
         } else {
             console.warn("Map has already been appended to the DOM");
         }
+    }
+
+    setDefaultPin(fileName) {
+        this.pinImagePath = fileName;
     }
 
     // creates and returns an object tag with the file path
@@ -63,22 +66,71 @@ export default class MapGT {
     }
 
     setActiveView(id) {
-        this.currentView.setAttributeNS(null, "visibility", "hidden");
-        this.currentView = this._mapDOM.getElementById(id);
-        this.currentView.setAttributeNS(null, "visibility", "visible"); 
+        const newActiveView = this._mapDOM.getElementById(id);
+        if (newActiveView) {
+            this.currentView.setAttributeNS(null, "visibility", "hidden");
+            this.currentView = newActiveView;
+            this.currentView.setAttributeNS(null, "visibility", "visible");
+            document.getElementById(id + "switcher").checked = true;
+        }
+    }
+
+    popupAt(x, y, data={}) {
+        const card = document.createElement("div");
+        card.style.top = `${x}px`;
+        card.style.left = `${y}px`;
+        card.classList.add("card");
+    
+        card.appendChild(this._createTitleDiv());
+        document.body.appendChild(card);
     }
 
     findCenter(id) {
-        var bbox = this._mapDOM.getElementById(id).getBBox();
-        const x = bbox.x + bbox.width / 2;
-        const y = bbox.y + bbox.height / 2;
+        return new Promise((function(resolve, reject) {
+            console.log("i'm hrere")
+            console.log(this);
+            setTimeout(function() {
+                if (this._mapDOM != null) {
+                   const bbox = this._mapDOM.getElementById(id).getBBox(),
+                    offsetLeft = this._parentContainer.offsetLeft,
+                    offsetTop = this._parentContainer.offsetTop,
+                    x = bbox.x + bbox.width / 4,
+                    y = bbox.y + bbox.height / 4;
+                    resolve([x + offsetLeft, y + offsetTop]); 
+                }
+            }.bind(this), 300);
+        }).bind(this));
     }
 
-    popupAt(x, y, data) {
+    dropPinAt(x, y) {
+        const pin = document.createElement("div"),
+            img = document.createElement("img");
+        img.src = this.pinImagePath;
+        img.style.width = "50px";
+        pin.style.position = "absolute";
+        pin.style.left = `${x}px`;
+        pin.style.top = `${y}px`;
+        pin.classList.add("pin");
+        pin.appendChild(img);
 
+        document.body.appendChild(pin);
     }
 
+    _createTitleDiv() {
+        const titleDiv = document.createElement("div");
+        titleDiv.classList.add("card-title");
+        titleDiv.setAttribute("id", "event-name");
+        return titleDiv;
+    }
+    
+    _createCardPointerDiv() {
+        const cardPointerDiv = document.createElement("div");
+        cardPointerDiv.classList.add("card-pointer");
+        return cardPointerDiv;
+    }
+    
     addViewSwitcher() {
+        console.log("adding view switcher");
         const viewSwitcher = document.createElement("div");
         viewSwitcher.classList.add("view-switcher");
         for (let i = 0; i < this.views.length; i++) {
@@ -86,10 +138,7 @@ export default class MapGT {
                 radioBtn = document.createElement("input"),
                 label = document.createElement("label");
 
-            if (i == 0) {
-                radioBtn.checked = true;
-            }
-            radioBtn.setAttribute("id", this.views[i].id);
+            radioBtn.setAttribute("id", this.views[i].id + "switcher");
             radioBtn.setAttribute("type", "radio");
             radioBtn.setAttribute("name", "view");
 
@@ -99,7 +148,7 @@ export default class MapGT {
                 }
             })
 
-            label.setAttribute("for", this.views[i].id);
+            label.setAttribute("for", this.views[i].id + "switcher");
             label.innerHTML = `${i + 1}`;
 
             viewSwitcherOption.classList.add("view-switcher-option");

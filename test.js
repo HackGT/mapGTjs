@@ -1,6 +1,7 @@
 const map = new MapGT("./maps/test.svg");
-const btn = document.getElementById("btn");
-const color = "#961fff";
-window.onload = () => {
-}
-
+map.setDefaultPin("./location-pin.svg");
+(async () => {
+    let x = await map.findCenter("goji");
+    console.log(x);
+    map.dropPinAt(x[0], x[1]);
+})();
