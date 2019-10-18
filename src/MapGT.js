@@ -85,14 +85,31 @@ export default class MapGT {
         document.body.appendChild(card);
     }
 
+    findCenter(id) {
+        return new Promise((function(resolve, reject) {
+            console.log("i'm hrere")
+            console.log(this);
+            setTimeout(function() {
+                if (this._mapDOM != null) {
+                   const bbox = this._mapDOM.getElementById(id).getBBox(),
+                    offsetLeft = this._parentContainer.offsetLeft,
+                    offsetTop = this._parentContainer.offsetTop,
+                    x = bbox.x + bbox.width / 4,
+                    y = bbox.y + bbox.height / 4;
+                    resolve([x + offsetLeft, y + offsetTop]); 
+                }
+            }.bind(this), 300);
+        }).bind(this));
+    }
+
     dropPinAt(x, y) {
         const pin = document.createElement("div"),
             img = document.createElement("img");
         img.src = this.pinImagePath;
         img.style.width = "50px";
         pin.style.position = "absolute";
-        pin.style.top = `${x}px`;
-        pin.style.left = `${y}px`;
+        pin.style.left = `${x}px`;
+        pin.style.top = `${y}px`;
         pin.classList.add("pin");
         pin.appendChild(img);
 
