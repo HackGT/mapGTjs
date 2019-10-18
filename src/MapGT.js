@@ -32,6 +32,9 @@ export default class MapGT {
                 .filter(el => el.attributes.visibility.nodeValue == "visible")[0];
             this.setActiveView("view0");
             this.addViewSwitcher();
+            this.findCenter("yeet");
+
+            
         }
     }
 
@@ -65,8 +68,14 @@ export default class MapGT {
         this.currentView.setAttributeNS(null, "visibility", "visible"); 
     }
 
+    findCenter(id) {
+        var bbox = this._mapDOM.getElementById(id).getBBox();
+        const x = bbox.x + bbox.width / 2;
+        const y = bbox.y + bbox.height / 2;
+    }
+
     popupAt(x, y, data) {
-        
+
     }
 
     addViewSwitcher() {
